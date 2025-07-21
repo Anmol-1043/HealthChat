@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profiles - Health Advice Chatbot{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="fas fa-users me-2"></i>
+                User Profiles
+            </h4>
+        </div>
+        <div class="card-body">
+            {% if profiles %}
+                <div class="row">
+                    {% for profile in profiles %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-user-circle me-2"></i>
+                                    {{ profile.name|default:"Anonymous User" }}
+                                </h5>
+                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        <small class="text-muted">Age</small>
+                                        <p class="mb-1">{{ profile.age|default:"N/A" }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Gender</small>
+                                        <p class="mb-1">{{ profile.gender|default:"N/A"|title }}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        <small class="text-muted">Weight</small>
+                                        <p class="mb-1">{{ profile.weight }} kg</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Height</small>
+                                        <p class="mb-1">{{ profile.height }} cm</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-2">
+                                    <small class="text-muted">Activity Level</small>
+                                    <p class="mb-1">{{ profile.activity_level|default:"N/A"|title }}</p>
+                                </div>
+                                
+                                <div class="mb-2">
+                                    <small class="text-muted">Goals</small>
+                                    <p class="mb-1">{{ profile.goals|default:"N/A"|title }}</p>
+                                </div>
+                                
+                                {% if profile.daily_routine %}
+                                <div class="mb-2">
+                                    <small class="text-muted">Daily Routine</small>
+                                    <p class="mb-1 small">{{ profile.daily_routine|truncatechars:100 }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                <div class="text-muted small">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    Created: {{ profile.created_at|date:"M d, Y" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No user profiles found</h5>
+                    <p class="text-muted">User profiles will appear here once they are created.</p>
+                    <a href="{% url 'chatbot:home' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>
+                        Create Your Profile
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 
